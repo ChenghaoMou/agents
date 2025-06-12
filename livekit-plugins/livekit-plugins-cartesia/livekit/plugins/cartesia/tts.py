@@ -113,6 +113,12 @@ class TTS(tts.TTS):
         if not cartesia_api_key:
             raise ValueError("CARTESIA_API_KEY must be set")
 
+        if model in {"sonic-2", "sonic-2-2025-04-16"} and (speed or emotion):
+            logger.warning(
+                "Experimental voice controls are no longer supported for Sonic-2 models. "
+                "They will be ignored. See https://docs.cartesia.ai/developer-tools/changelog."
+            )
+
         self._opts = _TTSOptions(
             model=model,
             language=language,
